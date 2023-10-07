@@ -11,7 +11,7 @@ public class ClickerGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        StartClickSession();
     }
 
     // Update is called once per frame
