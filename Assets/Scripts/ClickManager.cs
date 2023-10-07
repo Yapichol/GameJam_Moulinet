@@ -11,19 +11,11 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private float clickValue;
     private bool canClick;
 
-    // Start is called before the first frame update
     void Start()
     {
         score = 0;
         UpdateScorePanel();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     public void ClickAction()
     {
