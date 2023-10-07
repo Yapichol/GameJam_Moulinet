@@ -25,7 +25,6 @@ public class ClickerGameManager : MonoBehaviour
         clickManager.ActiveClick();
     }
 
-
     public void StopClickSession()
     {
         clickManager.DeactiveClick();
