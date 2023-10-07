@@ -9,6 +9,7 @@ public class ClickManager : MonoBehaviour
     private float score;
     [SerializeField] private TextMeshProUGUI scorePanel;
     [SerializeField] private float clickValue;
+    private bool canClick;
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +27,27 @@ public class ClickManager : MonoBehaviour
 
     public void ClickAction()
     {
-        score = score + clickValue;
+        if (canClick)
+        {
+            score = score + clickValue;
 
-        UpdateScorePanel();
+            UpdateScorePanel();
+        }
     }
 
     private void UpdateScorePanel()
     {
         scorePanel.text = score.ToString("F2");
+    }
+
+
+    public void ActiveClick()
+    {
+        canClick = true;
+    }
+
+    public void DeactiveClick()
+    {
+        canClick = false;
     }
 }

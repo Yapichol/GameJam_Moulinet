@@ -28,4 +28,10 @@ public class TimerManager : MonoBehaviour
     {
         timerPanel.text = remainingTime.ToString("F2");
     }
+
+
+    public void SetStartTimer(float newTimer)
+    {
+        startTime = newTimer;
+    }
 }
