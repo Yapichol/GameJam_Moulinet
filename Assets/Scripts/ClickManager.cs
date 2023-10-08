@@ -11,6 +11,7 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private float clickValue;
     private bool canClick;
     [SerializeField] private GameObject clickEffectPlus;
+    [SerializeField] private SceneData sceneData;
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class ClickManager : MonoBehaviour
     private void UpdateScorePanel()
     {
         scorePanel.text = score.ToString("F2");
+        sceneData.Score = score;
     }
 
 

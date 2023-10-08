@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClickerGameManager : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class ClickerGameManager : MonoBehaviour
         clickManager.DeactiveClick();
         timeManager.SetStartTimer(0f);
         timeManager.enabled = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 
