@@ -6,11 +6,13 @@ public class ClickerGameManager : MonoBehaviour
 {
     [SerializeField] private TimerManager timeManager;
     [SerializeField] private ClickManager clickManager;
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
+        ClickerEventSystem.TriggerEndGame += StopClickSession;
         StartClickSession();
     }
 
@@ -28,5 +30,13 @@ public class ClickerGameManager : MonoBehaviour
     public void StopClickSession()
     {
         clickManager.DeactiveClick();
+        timeManager.SetStartTimer(0f);
+        timeManager.enabled = false;
+    }
+
+
+    private void OnDesable()
+    {
+        ClickerEventSystem.TriggerEndGame -= StopClickSession;
     }
 }
