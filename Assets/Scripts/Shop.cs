@@ -7,6 +7,21 @@ public class Shop : MonoBehaviour
 {
 
     [SerializeField] private SceneData sceneData;
+    public Animator BubbleAnimator;
+    private bool StartBubble = true;
+
+    void Update()
+    {
+        if (StartBubble)
+        {
+            BubbleAnimator.SetTrigger("Enter");
+            StartBubble = false;
+        }
+        else
+        {
+            BubbleAnimator.SetTrigger("Exit");
+        }
+    }
 
     public void PlayGame()
     {
