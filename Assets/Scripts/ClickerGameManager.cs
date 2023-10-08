@@ -7,12 +7,17 @@ public class ClickerGameManager : MonoBehaviour
 {
     [SerializeField] private TimerManager timeManager;
     [SerializeField] private ClickManager clickManager;
+
     [SerializeField] private List<SpriteRenderer> warningProfessor;
     [SerializeField] private Vector2 professorNotLookingDelay;
     [SerializeField] private Vector2 professorLookingDelay;
     [SerializeField] private Vector2 professorWarningDelay;
 
     private bool professorCanLook;
+
+    [SerializeField] private List<SpriteRenderer> boardsNames;
+    private SpriteRenderer currentBoardName;
+
     
 
 
@@ -20,11 +25,28 @@ public class ClickerGameManager : MonoBehaviour
     void Start()
     {
         ClickerEventSystem.TriggerEndGame += StopClickSession;
-
+        HideBoardsName();
+        currentBoardName = ChooseRandomName();
+        currentBoardName.enabled = true;
         StartClickSession();
         ShowWarningProfessorLooking(-1);
         professorCanLook = true;
     }
+
+
+    private SpriteRenderer ChooseRandomName()
+    {
+        return boardsNames[Random.Range(0, boardsNames.Count)];
+    }
+
+    private void HideBoardsName()
+    {
+        foreach (SpriteRenderer name in boardsNames)
+        {
+            name.enabled = false;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
