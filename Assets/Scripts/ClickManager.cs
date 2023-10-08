@@ -22,6 +22,10 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private SceneData sceneData;
 
     [SerializeField] private GameObject characterArm;
+    [SerializeField] private SpriteRenderer phoneArm;
+    [SerializeField] private float phoneOutTime;
+    private bool phoneOut;
+
     [SerializeField] private Transform armMovePoints;
     [SerializeField] private Vector2 armMoveAmplitude;
 
@@ -31,6 +35,8 @@ public class ClickManager : MonoBehaviour
         score = 0;
         UpdateScorePanel();
         losingEffectActivated = false;
+        phoneOut = false;
+        phoneArm.enabled = false;
         HideLosingVisualEffects();
     }
 
@@ -54,6 +60,11 @@ public class ClickManager : MonoBehaviour
                 UpdateScorePanel();
             }
             MoveArm();
+
+            if (phoneOut == false)
+            {
+                StartCoroutine(UsePhone(phoneOutTime));
+            }
         }
     }
 
@@ -71,6 +82,22 @@ public class ClickManager : MonoBehaviour
     private void MoveArm()
     {
         characterArm.transform.position = new Vector3(armMovePoints.position.x + Random.Range(-armMoveAmplitude.x, armMoveAmplitude.x), armMovePoints.position.y + Random.Range(-armMoveAmplitude.y, armMoveAmplitude.y), armMovePoints.position.z);
+    }
+
+
+    private IEnumerator UsePhone(float delay)
+    {
+        phoneOut = true;
+        phoneArm.enabled = true;
+        float timer = 0;
+        while (timer < delay)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        phoneArm.enabled = false;
+        phoneOut = false;
     }
 
     private void UpdateScorePanel()

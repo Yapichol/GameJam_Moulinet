@@ -18,7 +18,15 @@ public class ClickerGameManager : MonoBehaviour
     [SerializeField] private List<SpriteRenderer> boardsNames;
     private SpriteRenderer currentBoardName;
 
-    
+    [SerializeField] private List<Transform> bubbleSpawnLeft;
+    [SerializeField] private List<Transform> bubbleSpawnRight;
+
+    [SerializeField] private List<string> histoirePhrases;
+    [SerializeField] private List<string> infoPhrases;
+    [SerializeField] private List<string> francaisPhrases;
+    [SerializeField] private List<string> MathsPhrases;
+    [SerializeField] private List<string> anglaisPhrases;
+
 
 
     // Start is called before the first frame update
@@ -145,6 +153,28 @@ public class ClickerGameManager : MonoBehaviour
 
         clickManager.SetProfessorLooking(false);
         professorCanLook = true;
+    }
+
+
+
+    private void ShowRandomPhrase()
+    {
+        float sideOfTheClassRoom = Random.Range(0.0f, 1.0f);
+
+        if(sideOfTheClassRoom > 0.5f)
+        {
+            // RIGHT
+            int randomIndex = Random.Range(0, histoirePhrases.Count);
+
+
+        }
+        else
+        {
+            // LEFT
+            int randomIndex = Random.Range(0, francaisPhrases.Count);
+
+
+        }
     }
 
 
