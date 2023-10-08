@@ -10,6 +10,7 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scorePanel;
     [SerializeField] private float clickValue;
     private bool canClick;
+    [SerializeField] private GameObject clickEffectPlus;
 
     void Start()
     {
@@ -22,9 +23,19 @@ public class ClickManager : MonoBehaviour
         if (canClick)
         {
             score = score + clickValue;
-
+            MakeSpawnClickEffect();
             UpdateScorePanel();
         }
+    }
+
+    private void MakeSpawnClickEffect()
+    {
+        GameObject newEffect = Instantiate(clickEffectPlus);
+        Vector3 v3 = Input.mousePosition;
+        v3.z = 10.0f;
+        v3 = Camera.main.ScreenToWorldPoint(v3);
+        newEffect.transform.position = v3;
+
     }
 
     private void UpdateScorePanel()

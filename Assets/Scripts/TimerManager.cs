@@ -21,6 +21,10 @@ public class TimerManager : MonoBehaviour
     void Update()
     {
         remainingTime -= Time.deltaTime;
+        if(remainingTime < 0)
+        {
+            ClickerEventSystem.EnterEndGame();
+        }
         UpdateTimerPanel();
     }
 
@@ -33,5 +37,6 @@ public class TimerManager : MonoBehaviour
     public void SetStartTimer(float newTimer)
     {
         startTime = newTimer;
+        UpdateTimerPanel();
     }
 }
