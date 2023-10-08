@@ -21,6 +21,10 @@ public class ClickManager : MonoBehaviour
 
     [SerializeField] private SceneData sceneData;
 
+    [SerializeField] private GameObject characterArm;
+    [SerializeField] private Transform armMovePoints;
+    [SerializeField] private Vector2 armMoveAmplitude;
+
 
     void Start()
     {
@@ -49,6 +53,7 @@ public class ClickManager : MonoBehaviour
                 MakeSpawnClickEffect();
                 UpdateScorePanel();
             }
+            MoveArm();
         }
     }
 
@@ -60,6 +65,12 @@ public class ClickManager : MonoBehaviour
         v3 = Camera.main.ScreenToWorldPoint(v3);
         newEffect.transform.position = v3;
 
+    }
+
+
+    private void MoveArm()
+    {
+        characterArm.transform.position = new Vector3(armMovePoints.position.x + Random.Range(-armMoveAmplitude.x, armMoveAmplitude.x), armMovePoints.position.y + Random.Range(-armMoveAmplitude.y, armMoveAmplitude.y), armMovePoints.position.z);
     }
 
     private void UpdateScorePanel()
