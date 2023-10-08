@@ -11,12 +11,16 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private float clickValue;
     private bool canClick;
     [SerializeField] private GameObject clickEffectPlus;
+
     private bool professorLooking = false;
 
     [SerializeField] private List<SpriteRenderer> losingEffect;
     [SerializeField] private float losingEffectDelay;
     [SerializeField] private float losingEachEffectDelay;
     private bool losingEffectActivated;
+
+    [SerializeField] private SceneData sceneData;
+
 
     void Start()
     {
@@ -61,6 +65,7 @@ public class ClickManager : MonoBehaviour
     private void UpdateScorePanel()
     {
         scorePanel.text = score.ToString("F2");
+        sceneData.Score = score;
     }
 
 
