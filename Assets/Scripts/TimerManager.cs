@@ -9,6 +9,8 @@ public class TimerManager : MonoBehaviour
     [SerializeField] private float startTime;
     private float remainingTime;
 
+    [SerializeField] private GameObject clock;
+
 
     // Start is called before the first frame update
     void Start()

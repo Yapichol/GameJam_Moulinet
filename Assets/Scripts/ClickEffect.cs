@@ -56,4 +56,5 @@ public class ClickEffect : MonoBehaviour
         }
         transform.localScale = new Vector3 (initScale, initScale, initScale);
     }
+
 }

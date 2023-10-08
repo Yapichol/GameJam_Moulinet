@@ -11,20 +11,40 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private float clickValue;
     private bool canClick;
     [SerializeField] private GameObject clickEffectPlus;
+    private bool professorLooking = false;
+
+    [SerializeField] private List<SpriteRenderer> losingEffect;
+    [SerializeField] private float losingEffectDelay;
+    [SerializeField] private float losingEachEffectDelay;
+    private bool losingEffectActivated;
 
     void Start()
     {
         score = 0;
         UpdateScorePanel();
+        losingEffectActivated = false;
+        HideLosingVisualEffects();
     }
 
     public void ClickAction()
     {
         if (canClick)
         {
-            score = score + clickValue;
-            MakeSpawnClickEffect();
-            UpdateScorePanel();
+            if (professorLooking)
+            {
+                score = score - clickValue * 3;
+                UpdateScorePanel();
+                if (losingEffectActivated == false)
+                {
+                    StartCoroutine(LoosingEffect(losingEffectDelay));
+                }
+            }
+            else
+            {
+                score = score + clickValue;
+                MakeSpawnClickEffect();
+                UpdateScorePanel();
+            }
         }
     }
 
@@ -53,4 +73,59 @@ public class ClickManager : MonoBehaviour
     {
         canClick = false;
     }
+
+
+    public void SetProfessorLooking(bool looking)
+    {
+        professorLooking = looking;
+    }
+
+
+    private IEnumerator LoosingEffect(float delay)
+    {
+        losingEffectActivated = true;
+        float timer = 0;
+        float timerEffect = 0;
+        int currentEffectIndex = 0;
+        AppearLosingVisualEffect(currentEffectIndex);
+        while (timer < delay)
+        {
+            timerEffect += Time.deltaTime;
+            if (timerEffect > losingEachEffectDelay)
+            {
+                currentEffectIndex++;
+                if (currentEffectIndex >= losingEffect.Count)
+                {
+                    currentEffectIndex = 0;
+                }
+                AppearLosingVisualEffect(currentEffectIndex);
+                timerEffect = 0;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        HideLosingVisualEffects();
+        losingEffectActivated = false;
+    }
+
+
+    private void AppearLosingVisualEffect(int effectId)
+    {
+        HideLosingVisualEffects();
+        losingEffect[effectId].enabled = true;
+    }
+
+
+    private void HideLosingVisualEffects()
+    {
+        foreach (SpriteRenderer effect in losingEffect)
+        {
+            effect.enabled = false;
+        }
+    }
+
+
+
 }
