@@ -15,16 +15,23 @@ public class ClickerGameManager : MonoBehaviour
 
     private bool professorCanLook;
 
-    [SerializeField] private List<SpriteRenderer> boardsNames;
-    private SpriteRenderer currentBoardName;
+    [SerializeField] private List<SpriteRenderer> testsSubjectBoard;
+    [SerializeField] private List<string> testsSubjects;
+    private string currentTestSubjects;
 
+    bool studentCanThink = false;
+    [SerializeField] private Vector2 studentThinksDelay;
+    [SerializeField] private float studentThinkTime;
+
+    [SerializeField] private Bubble bubbleLeft;
     [SerializeField] private List<Transform> bubbleSpawnLeft;
+    [SerializeField] private Bubble bubbleRight;
     [SerializeField] private List<Transform> bubbleSpawnRight;
 
     [SerializeField] private List<string> histoirePhrases;
     [SerializeField] private List<string> infoPhrases;
     [SerializeField] private List<string> francaisPhrases;
-    [SerializeField] private List<string> MathsPhrases;
+    [SerializeField] private List<string> mathsPhrases;
     [SerializeField] private List<string> anglaisPhrases;
 
 
@@ -34,24 +41,26 @@ public class ClickerGameManager : MonoBehaviour
     {
         ClickerEventSystem.TriggerEndGame += StopClickSession;
         HideBoardsName();
-        currentBoardName = ChooseRandomName();
-        currentBoardName.enabled = true;
+        currentTestSubjects = ChooseRandomTestSubject();
+        GetCurrentTestSubjectSpriteRenderer().enabled = true;
         StartClickSession();
         ShowWarningProfessorLooking(-1);
         professorCanLook = true;
+        studentCanThink = false;
+        StartCoroutine(DelayBeforeNextStudentBubble(Random.Range(studentThinksDelay.x, studentThinksDelay.y)));
     }
 
 
-    private SpriteRenderer ChooseRandomName()
+    private string ChooseRandomTestSubject()
     {
-        return boardsNames[Random.Range(0, boardsNames.Count)];
+        return testsSubjects[Random.Range(0, testsSubjects.Count)];
     }
 
     private void HideBoardsName()
     {
-        foreach (SpriteRenderer name in boardsNames)
+        foreach (SpriteRenderer sprite in testsSubjectBoard)
         {
-            name.enabled = false;
+            sprite.enabled = false;
         }
     }
 
@@ -63,6 +72,12 @@ public class ClickerGameManager : MonoBehaviour
         {
             professorCanLook = false;
             StartCoroutine(DelayBeforeProfessorLook(Random.Range(professorNotLookingDelay.x, professorNotLookingDelay.y)));
+        }
+        if (studentCanThink)
+        {
+            studentCanThink = false;
+            ShowRandomPhrase();
+            StartCoroutine(DelayBeforeNextStudentBubble(Random.Range(studentThinksDelay.x, studentThinksDelay.y)));
         }
     }
 
@@ -147,7 +162,6 @@ public class ClickerGameManager : MonoBehaviour
 
         while(timer < delay)
         {
-
             timer += Time.deltaTime;
             yield return null;
         }
@@ -161,24 +175,119 @@ public class ClickerGameManager : MonoBehaviour
     private void ShowRandomPhrase()
     {
         float sideOfTheClassRoom = Random.Range(0.0f, 1.0f);
+        List<string> subjectPhrases = GetCurrentTestSubjectPhrases();
 
         if(sideOfTheClassRoom > 0.5f)
         {
             // RIGHT
-            int randomIndex = Random.Range(0, histoirePhrases.Count);
+            if (subjectPhrases.Count > 0)
+            {
+                int randomIndex = Random.Range(0, subjectPhrases.Count);
+                string newPhrase = subjectPhrases[randomIndex];
 
+                randomIndex = Random.Range(0, bubbleSpawnLeft.Count);
+                Bubble newBubble = Instantiate(bubbleLeft, bubbleSpawnLeft[randomIndex]);
+                newBubble.SetText(newPhrase);
+                StartCoroutine(DelayBeforeDeath(studentThinkTime, newBubble.gameObject));
+            }
 
         }
         else
         {
             // LEFT
-            int randomIndex = Random.Range(0, francaisPhrases.Count);
+            if (subjectPhrases.Count > 0)
+            {
+                int randomIndex = Random.Range(0, subjectPhrases.Count);
+                string newPhrase = subjectPhrases[randomIndex];
 
+                randomIndex = Random.Range(0, bubbleSpawnRight.Count);
+                Bubble newBubble = Instantiate(bubbleRight, bubbleSpawnRight[randomIndex]);
+                newBubble.SetText(newPhrase);
+                StartCoroutine(DelayBeforeDeath(studentThinkTime, newBubble.gameObject));
+            }
 
         }
     }
 
 
+    private List<string> GetCurrentTestSubjectPhrases()
+    {
+        if (currentTestSubjects == "anglais")
+        {
+            return anglaisPhrases;
+        }
+        else if (currentTestSubjects == "francais")
+        {
+            return francaisPhrases;
+        }
+        else if (currentTestSubjects == "histoire")
+        {
+            return histoirePhrases;
+        }
+        else if (currentTestSubjects == "informatique")
+        {
+            return infoPhrases;
+        }
+        else if (currentTestSubjects == "math")
+        {
+            return mathsPhrases;
+        }
+        return anglaisPhrases;
+    }
+
+    private SpriteRenderer GetCurrentTestSubjectSpriteRenderer()
+    {
+        if(currentTestSubjects == "anglais")
+        {
+            return testsSubjectBoard[0];
+        }
+        else if(currentTestSubjects == "francais")
+        {
+            return testsSubjectBoard[1];
+        }
+        else if (currentTestSubjects == "histoire")
+        {
+            return testsSubjectBoard[2];
+        }
+        else if (currentTestSubjects == "informatique")
+        {
+            return testsSubjectBoard[3];
+        }
+        else if (currentTestSubjects == "math")
+        {
+            return testsSubjectBoard[4];
+        }
+        return testsSubjectBoard[0];
+    }
+
+
+    private IEnumerator DelayBeforeNextStudentBubble(float delay)
+    {
+        float timer = 0;
+
+        while (timer < delay)
+        {
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        studentCanThink = true;
+    }
+
+    private IEnumerator DelayBeforeDeath(float delay, GameObject gObject)
+    {
+        float timer = 0;
+
+        while (timer < delay)
+        {
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(gObject);
+    }
 
 
     private void OnDesable()

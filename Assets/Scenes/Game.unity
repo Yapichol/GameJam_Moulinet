@@ -1174,12 +1174,21 @@ MonoBehaviour:
   professorNotLookingDelay: {x: 2, y: 5}
   professorLookingDelay: {x: 1.5, y: 3}
   professorWarningDelay: {x: 1.5, y: 3}
-  boardsNames:
+  testsSubjectBoard:
   - {fileID: 241195293}
   - {fileID: 1014895982}
   - {fileID: 1072886611}
   - {fileID: 199980331}
   - {fileID: 634680469}
+  testsSubjects:
+  - anglais
+  - francais
+  - histoire
+  - informatique
+  - math
+  studentThinksDelay: {x: 4, y: 8}
+  studentThinkTime: 3
+  bubbleLeft: {fileID: 7717603866364586108, guid: 28216e2ace3c75d4aab23e89c3fd9e7b, type: 3}
   bubbleSpawnLeft:
   - {fileID: 1834058106}
   - {fileID: 550537111}
@@ -1187,6 +1196,7 @@ MonoBehaviour:
   - {fileID: 966447127}
   - {fileID: 1783227444}
   - {fileID: 972706066}
+  bubbleRight: {fileID: 295716945141708515, guid: ace492bb36f58ac43ad6372274b85246, type: 3}
   bubbleSpawnRight:
   - {fileID: 466731929}
   - {fileID: 39077707}
@@ -1212,12 +1222,12 @@ MonoBehaviour:
   - "Mais o\xF9 est donc Ornicar ? Euh ... Je sais pas moi."
   - "COD ? Pourquoi elle parle Call of celle l\xE0 ?"
   - "C'est le participe pass\xE9 de l'auxiliaire dans la phrase."
-  MathsPhrases:
-  - "P de Q doit faire environ 42 quand Q est \xE0 2"
+  mathsPhrases:
   - "Ici le num\xE9rateur est plus grand que le d\xE9nominateur."
   - "47 + 33 x 0,2 / 2 \xE7a donne pas grand chose."
   - A = ( B x H) / 2
   - "Casse toi ! C'\xE9tait quoi come formule ?"
+  - "La th\xE9or\xE8me de Pythagore enfin un truc que je sais !"
   anglaisPhrases:
   - They're taking the hobbit to Isengard.
   - My flowers are beautiful.
@@ -1231,7 +1241,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822117718}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e00ee8cfd568ff343a7f99b99fe58527, type: 3}
   m_Name: 
