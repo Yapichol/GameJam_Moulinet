@@ -8,6 +8,7 @@ public class ClickerGameManager : MonoBehaviour
     [SerializeField] private TimerManager timeManager;
     [SerializeField] private ClickManager clickManager;
 
+    [SerializeField] private Professor professor;
     [SerializeField] private List<SpriteRenderer> warningProfessor;
     [SerializeField] private Vector2 professorNotLookingDelay;
     [SerializeField] private Vector2 professorLookingDelay;
@@ -46,6 +47,7 @@ public class ClickerGameManager : MonoBehaviour
         StartClickSession();
         ShowWarningProfessorLooking(-1);
         professorCanLook = true;
+        professor.SetIsAwake(false);
         studentCanThink = false;
         StartCoroutine(DelayBeforeNextStudentBubble(Random.Range(studentThinksDelay.x, studentThinksDelay.y)));
     }
@@ -158,6 +160,7 @@ public class ClickerGameManager : MonoBehaviour
     private IEnumerator ProfessorLooking(float delay)
     {
         clickManager.SetProfessorLooking(true);
+        professor.SetIsAwake(true);
         float timer = 0;
 
         while(timer < delay)
@@ -167,6 +170,7 @@ public class ClickerGameManager : MonoBehaviour
         }
 
         clickManager.SetProfessorLooking(false);
+        professor.SetIsAwake(false);
         professorCanLook = true;
     }
 
