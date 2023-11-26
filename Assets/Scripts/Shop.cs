@@ -14,12 +14,12 @@ public class Shop : MonoBehaviour
     {
         if (StartBubble)
         {
-            BubbleAnimator.SetTrigger("Enter");
+            //BubbleAnimator.SetTrigger("Enter");
             StartBubble = false;
         }
         else
         {
-            BubbleAnimator.SetTrigger("Exit");
+            //BubbleAnimator.SetTrigger("Exit");
         }
     }
 

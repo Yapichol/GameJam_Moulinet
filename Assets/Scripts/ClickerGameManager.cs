@@ -76,6 +76,7 @@ public class ClickerGameManager : MonoBehaviour
         clickManager.DeactiveClick();
         timeManager.SetStartTimer(0f);
         timeManager.enabled = false;
+        OnDesable();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
