@@ -7,7 +7,8 @@ public class ClickManager : MonoBehaviour
 {
 
     private float score;
-    [SerializeField] private TextMeshProUGUI scorePanel;
+    //[SerializeField] private TextMeshProUGUI scorePanel;
+    [SerializeField] private NoteSpriteManager noteScore;
     [SerializeField] private float clickValue;
     private bool canClick;
     [SerializeField] private GameObject clickEffectPlus;
@@ -102,7 +103,8 @@ public class ClickManager : MonoBehaviour
 
     private void UpdateScorePanel()
     {
-        scorePanel.text = score.ToString("F2");
+        //scorePanel.text = score.ToString("F2");
+        noteScore.UpdateScore(score);
         sceneData.Score = score;
     }
 
