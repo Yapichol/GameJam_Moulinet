@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TimerManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerPanel;
     [SerializeField] private float startTime;
+
+    [SerializeField] private GameObject needle;
+    [SerializeField] private Image fillCircle;
     private float remainingTime;
 
     [SerializeField] private GameObject clock;
@@ -16,7 +20,10 @@ public class TimerManager : MonoBehaviour
     void Start()
     {
         remainingTime = startTime;
-        UpdateTimerPanel();
+        //UpdateTimerPanel();
+
+        fillCircle.fillAmount = 0.0f;
+        needle.transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     // Update is called once per frame
@@ -27,12 +34,29 @@ public class TimerManager : MonoBehaviour
         {
             ClickerEventSystem.EnterEndGame();
         }
-        UpdateTimerPanel();
+        //UpdateTimerPanel();
+        UpdateTimerClock();
     }
 
     private void UpdateTimerPanel()
     {
         timerPanel.text = remainingTime.ToString("F2");
+    }
+
+
+    private void UpdateTimerClock()
+    {
+        float progression = (startTime - remainingTime) / startTime;
+
+        fillCircle.fillAmount = progression;
+        if (progression < 0.999f)
+        {
+            needle.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -360 * progression));
+        }
+        else
+        {
+            needle.transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
     }
 
 
